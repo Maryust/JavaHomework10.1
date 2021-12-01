@@ -1,85 +1,78 @@
 package ru.netology;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RadioTest {
 
-    @Test
-    public void shouldIncreaseVolumeOverTheLimit() {
+    @ParameterizedTest
+    @CsvSource(
+            value = {"Increase volume over the limit, 11, 10",
+                    "Increase volume in the limit, 7, 8"
+            }
+    )
+    public void shouldIncreaseVolume(String name, int volume, int expected) {
         Radio radio = new Radio();
-        radio.setVolume(11);
-        assertEquals(10, radio.increaseVolume());
-    }
-    @Test
-    public void shouldIncreaseVolumeInTheLimit() {
-        Radio radio = new Radio();
-        radio.setVolume(7);
-        assertEquals(8, radio.increaseVolume());
-    }
-
-    @Test
-    public void shouldReduceVolumeInTheLimit() {
-        Radio radio = new Radio();
-        radio.setVolume(5);
-        assertEquals(4, radio.reduceVolume());
+        radio.setVolume(volume);
+        int actual = radio.increaseVolume();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldReduceVolumeLowerThanLimit() {
+    @ParameterizedTest
+    @CsvSource(
+            value = {"Reduce volume in the limit, 5, 4",
+                    "Reduce volume lower than the limit, 0, 0"
+            }
+    )
+    public void shouldReduceVolume(String name, int volume, int expected) {
         Radio radio = new Radio();
-        radio.setVolume(0);
-        assertEquals(0, radio.reduceVolume());
+        radio.setVolume(volume);
+        int actual = radio.reduceVolume();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldChoseNumberOfRadiostationOverTheLimit() {
+    @ParameterizedTest
+    @CsvSource(
+            value = {"Chose number of radio station over the limit, 11, 0",
+                    "Chose number of radio station in the limit, 7, 7",
+                    "Chose number of radio station below the limit, -5, 0",
+            }
+    )
+    public void shouldChoseNumberOfRadioStation(String name, int NumberRadioStation, int expected) {
         Radio radio = new Radio();
-        radio.setNumberRadiostation(11);
-        assertEquals(0, radio.getNumberRadiostation());
+        radio.setNumberRadioStation(NumberRadioStation);
+        int actual = radio.getNumberRadioStation();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldChoseNumberOfRadiostationInTheLimit() {
+    @ParameterizedTest
+    @CsvSource(
+            value = {"Increase last radio station, 9, 0",
+                    "Increase number of radio station in the limit, 8, 9"
+            }
+    )
+    public void shouldIncreaseRadioStation(String name, int NumberRadioStation, int expected) {
         Radio radio = new Radio();
-        radio.setNumberRadiostation(7);
-        assertEquals(7, radio.getNumberRadiostation());
+        radio.setNumberRadioStation(NumberRadioStation);
+        int actual = radio.increaseStation();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldChoseNumberOfRadiostationBelowTheLimit() {
-        Radio radio = new Radio();
-        radio.setNumberRadiostation(-5);
-        assertEquals(0, radio.getNumberRadiostation());
-    }
 
-    @Test
-    public void shouldIncreaseLastRadiostation() {
+    @ParameterizedTest
+    @CsvSource(
+            value = {"Reduce zero radio station, 0, 9",
+                    "Reduce number of radio station in the limit, 6, 5"
+            }
+    )
+    public void shouldReduceRadioStation(String name, int NumberRadioStation, int expected) {
         Radio radio = new Radio();
-        radio.setNumberRadiostation(9);
-        assertEquals(0, radio.increaseStation());
-    }
-
-    @Test
-    public void shouldIncreaseNumberOfRadiostationInTheLimit() {
-        Radio radio = new Radio();
-        radio.setNumberRadiostation(8);
-        assertEquals(9, radio.increaseStation());
-    }
-
-    @Test
-    public void shouldReduceZeroRadiostation() {
-        Radio radio = new Radio();
-        radio.setNumberRadiostation(0);
-        assertEquals(9, radio.reduceStation());
-    }
-
-    @Test
-    public void shouldReduceNumberOfRadiostationInTheLimit() {
-        Radio radio = new Radio();
-        radio.setNumberRadiostation(8);
-        assertEquals(7, radio.reduceStation());
+        radio.setNumberRadioStation(NumberRadioStation);
+        int actual = radio.reduceStation();
+        assertEquals(expected, actual);
     }
 }
 
